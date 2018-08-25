@@ -32,7 +32,7 @@ fs.stat(sourcePath, (error) => {
     const parseFolders = require('../scripts/parseFolders');
     const cleanFolders = require('../scripts/cleanFolders');
     const displayResults = require('../scripts/displayResults');
-
+    console.time('Cleaner');
     parseXML(path.relative(process.cwd(), argv.config))
     .then(parseFolders.bind(this, sourcePath))
     .then(cleanFolders.bind(this, sourcePath, outputPath))
@@ -43,5 +43,10 @@ fs.stat(sourcePath, (error) => {
             exportResults(path.join(outputPath, argv.export), data);
         } 
         return data;
+    }).then(() => {
+        console.log('\n---------------------------------------------------------------');
+        console.log('Total duration');
+        console.log('---------------------------------------------------------------\n');
+        console.timeEnd('Cleaner');
     })
 }); 
