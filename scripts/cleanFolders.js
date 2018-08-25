@@ -40,6 +40,7 @@ module.exports = (inputSource, outputSource, data) => {
                     throw error;
                 }
 
+                const xmlImages = data.xmlImages.splice();
                 const copyPromises = [];
                 const copiedImages = [];
                 const skippedImages = [];
@@ -50,7 +51,7 @@ module.exports = (inputSource, outputSource, data) => {
 
                     // Copy image only if they are reference in the XML
                     if (imgIndex > -1) {
-                        data.xmlImages.splice(imgIndex, 1);  // Remove the path from the XML array to optimize performance and reduce search time
+                        xmlImages.splice(imgIndex, 1);  // Remove the path from the XML array to optimize performance and reduce search time
                         return copyPromises.push(copyImage(folderImage, imagePath, outputSource)
                             .then((copiedImage) => copiedImages.push(copiedImage)));
                     } else {
