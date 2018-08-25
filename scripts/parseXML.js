@@ -3,14 +3,16 @@
  * @param {array} products 
  */
 function getImages(products) {
-    return products.filter((product) => product.images)
+    const images = products.filter((product) => product.images)
     .map((product) => product.images)
     .reduce((accumulator, arr) => accumulator.concat(arr))
     .map((group) => group['image-group'])
     .reduce((accumulator, arr) => accumulator.concat(arr))
     .map((img) => img.image)
     .reduce((accumulator, arr) => accumulator.concat(arr))
-    .map(img => img.$.path)
+    .map(img => img.$.path);
+
+    return [ ...new Set(images) ];  // Remove duplicated
 }
 
 module.exports = (path) => {
