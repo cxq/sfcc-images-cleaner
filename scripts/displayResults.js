@@ -13,6 +13,7 @@ module.exports = (outputSource, data) => {
     console.log(chalk.bold('Folder copied: ', chalk.magenta(outputSource)));
     console.log(chalk.bold('Total images copied: '), chalk.green(data.totalCopiedImages));
     console.log(chalk.bold('Total images skipped: '), data.totalSkippedImages);
+    console.log(chalk.bold('Total images in XML not found in the folder: '), chalk.red(data.totalNotFoundImages));
 
     return data;
 };

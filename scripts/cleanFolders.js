@@ -59,12 +59,16 @@ module.exports = (inputSource, outputSource, data) => {
                     }
                 });
                 return Promise.all(copyPromises).then(() => {
+                    const totalCopiedImages = copiedImages.length;
+                    const totalSkippedImages = skippedImages.length;
+
                     return {
                         ...data,
                         copiedImages,
                         skippedImages,
-                        totalCopiedImages: copiedImages.length,
-                        totalSkippedImages: skippedImages.length,
+                        totalCopiedImages,
+                        totalSkippedImages,
+                        totalNotFoundImages: data.totalXmlImages - totalCopiedImages, // Images that are in the XML but were not found in the folders
                     }
                 }).then(resolve, reject);
             });
