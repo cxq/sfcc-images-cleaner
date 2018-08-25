@@ -19,6 +19,7 @@ if (!argv.config) {
 }
 
 const sourcePath = path.resolve(inputSource);
+const outputPath = path.resolve(outputSource);
 
 // Check if directory exists
 fs.stat(sourcePath, (error) => {
@@ -29,7 +30,11 @@ fs.stat(sourcePath, (error) => {
 
     const parseXML = require('../scripts/parseXML');
     const parseFolders = require('../scripts/parseFolders');
+    const cleanFolders = require('../scripts/cleanFolders');
+    const displayResults = require('../scripts/displayResults');
 
     parseXML(path.relative(process.cwd(), argv.config))
-    .then(parseFolders.bind(this, inputSource));
+    .then(parseFolders.bind(this, sourcePath))
+    .then(cleanFolders.bind(this, sourcePath, outputPath))
+    .then(displayResults)
 }); 

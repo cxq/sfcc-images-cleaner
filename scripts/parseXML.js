@@ -28,9 +28,12 @@ module.exports = (path) => {
                     throw err;
                 }
 
+                const xmlImages = getImages(result.catalog.product);
+
                 resolve({
                     catalogId: result.catalog.$['catalog-id'],
-                    xmlImages: getImages(result.catalog.product),
+                    xmlImages,
+                    totalXmlImages: xmlImages.length,
                 });
             });
         });
