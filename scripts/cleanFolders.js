@@ -42,7 +42,7 @@ module.exports = (inputSource, outputSource, data) => {
 
                 const copyPromises = [];
                 const copiedImages = [];
-                const deletedImages = [];
+                const skippedImages = [];
 
                 data.folderImages.forEach((folderImage) => {
                     const imagePath = resolveImagePath(sourceDirname, folderImage);
@@ -54,16 +54,16 @@ module.exports = (inputSource, outputSource, data) => {
                         return copyPromises.push(copyImage(folderImage, imagePath, outputSource)
                             .then((copiedImage) => copiedImages.push(copiedImage)));
                     } else {
-                        deletedImages.push(folderImage);
+                        skippedImages.push(folderImage);
                     }
                 });
                 return Promise.all(copyPromises).then(() => {
                     return {
                         ...data,
                         copiedImages,
-                        deletedImages,
+                        skippedImages,
                         totalCopiedImages: copiedImages.length,
-                        totalDeletedImages: deletedImages.length,
+                        totalSkippedImages: skippedImages.length,
                     }
                 }).then(resolve, reject);
             });

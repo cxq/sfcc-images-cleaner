@@ -8,5 +8,7 @@ module.exports = (outputSource, data) => {
     console.log(chalk.bold('New folder created: ', chalk.magenta(outputSource)));
     console.log('---------------------------------------------------------------\n');
     console.log(chalk.bold('Total images copied: '), data.totalCopiedImages);
-    console.log(chalk.bold('Total images skipped: '), data.totalDeletedImages);
+    console.log(chalk.bold('Total images skipped: '), data.totalSkippedImages);
+
+    return data;
 };

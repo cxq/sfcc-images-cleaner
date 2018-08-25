@@ -37,4 +37,11 @@ fs.stat(sourcePath, (error) => {
     .then(parseFolders.bind(this, sourcePath))
     .then(cleanFolders.bind(this, sourcePath, outputPath))
     .then(displayResults.bind(this, outputPath))
+    .then((data) => {
+        if (argv.export) {
+            const exportResults = require('../scripts/exportResults');
+            exportResults(path.join(outputPath, argv.export), data);
+        } 
+        return data;
+    })
 }); 
