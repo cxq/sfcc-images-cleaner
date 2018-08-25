@@ -36,5 +36,5 @@ fs.stat(sourcePath, (error) => {
     parseXML(path.relative(process.cwd(), argv.config))
     .then(parseFolders.bind(this, sourcePath))
     .then(cleanFolders.bind(this, sourcePath, outputPath))
-    .then(displayResults)
+    .then(displayResults.bind(this, outputPath))
 }); 
