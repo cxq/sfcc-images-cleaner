@@ -1,5 +1,6 @@
 # sfcc-images-cleaner
-SFCC image catalog cleaner to remove the unused images
+SFCC image catalog cleaner to remove the unused images.
+It helps to improve the speed of the site import/export as it's usually mainly due to the image weight.
 
 
 ## Install the package
@@ -10,7 +11,8 @@ npm install -g sfcc-images-cleaner
 ## Run the cleaner
 A Command-line Interface is available and can be used as the example below:
 
-source-catalog-folder: relative path of the catalog folder where the images are
+source-catalog-folder: relative path of the catalog folder where the images are.
+
 output-folder: relative path of the folder where you want to have the cleaned folder.
 
 ```bash
@@ -30,7 +32,7 @@ This option is mandatory and needs to be filled. It is the XML file where you wa
 sfcc-images-cleaner <source-catalog-folder> <output-folder> --config=catalog.xml
 ```
 
-### Export (mandatory)
+### Export (optional)
 
 You can export the results into a worksheet. You can define the format yourself but by default it is CSV if you forget the extension.
 The file is created in the output folder
@@ -49,3 +51,6 @@ sfcc-images-cleaner ../default-catalog/ ../default-clean-catalog --config=catalo
 ```bash
 sfcc-images-cleaner ../default-catalog/ ../default-clean-catalog --config=catalog.xml --export=myFile.xlsx
 ```
+
+### optimize (optional)
+Feature to come... (compress image)
