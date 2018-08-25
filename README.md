@@ -32,7 +32,8 @@ sfcc-images-cleaner <source-catalog-folder> <output-folder> --config=catalog.xml
 
 ### Export (mandatory)
 
-You can export the results into a worksheet. You can define the format yourself but by default it is CSV if you forget the extension
+You can export the results into a worksheet. You can define the format yourself but by default it is CSV if you forget the extension.
+The file is created in the output folder
 
 
 ```bash

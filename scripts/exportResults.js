@@ -1,4 +1,5 @@
 module.exports = (outputFile, data) => {
+    const path = require('path');
     const fs = require('fs-extra');
     const xlsx = require('node-xlsx');
     const headers = ['XML images', 'Folder images', 'Images copied', 'Images skipped'];
@@ -19,6 +20,10 @@ module.exports = (outputFile, data) => {
         rows.push(createRow(i));
     }
     const xlsBuffer = xlsx.build([{name: 'exportSFCCResults', data: rows}]);
+
+    if (path.extname(outputFile) === '') {
+        outputFile = outputFile + '.csv';
+    }
 
     return fs.outputFile(outputFile, xlsBuffer).then(() => {
         return data;
