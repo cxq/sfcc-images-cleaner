@@ -44,8 +44,9 @@ fs.stat(sourcePath, (error) => {
         } 
         return data;
     }).then(() => {
+        const chalk = require('chalk');
         console.log('\n---------------------------------------------------------------');
-        console.log('Total duration');
+        console.log(chalk.bold(' Total duration '));
         console.log('---------------------------------------------------------------\n');
         console.timeEnd('Cleaner');
     })
