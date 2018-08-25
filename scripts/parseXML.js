@@ -17,7 +17,7 @@ module.exports = (path) => {
     const fs = require('fs');
     var parseString = require('xml2js').parseString;
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         fs.readFile(path, (err, data) => {
             if (err) {
                 console.log('The XML file cannot be found');
@@ -30,7 +30,7 @@ module.exports = (path) => {
 
                 resolve({
                     catalogId: result.catalog.$['catalog-id'],
-                    images: getImages(result.catalog.product),
+                    xmlImages: getImages(result.catalog.product),
                 });
             });
         });

@@ -31,5 +31,5 @@ fs.stat(sourcePath, (error) => {
     const parseFolders = require('../scripts/parseFolders');
 
     parseXML(path.relative(process.cwd(), argv.config))
-    .then(parseFolders);
+    .then(parseFolders.bind(this, inputSource));
 }); 
