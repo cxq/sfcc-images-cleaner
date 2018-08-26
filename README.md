@@ -2,7 +2,7 @@
 SFCC image catalog cleaner to remove the unused images and also optimize the ones that are used.
 It helps to improve the speed of the site import/export as it's usually main cause of slowness.
 
-It also give a text report with the following information:
+It also gives a text report with the following information:
 
 - Total images referenced in the XML
 - Total images in the image folder
