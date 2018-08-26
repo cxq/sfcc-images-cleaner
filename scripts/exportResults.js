@@ -1,3 +1,8 @@
+/**
+ * 
+ * @param {string} outputFile absolute path of the output folder
+ * @param {object} data
+ */
 module.exports = (outputFile, data) => {
     console.time('Excel export');
     const path = require('path');
@@ -22,10 +27,12 @@ module.exports = (outputFile, data) => {
     }
     const xlsBuffer = xlsx.build([{name: 'exportSFCCResults', data: rows}]);
 
+    // If extension is missing, we fallback to CSV
     if (path.extname(outputFile) === '') {
         outputFile = outputFile + '.csv';
     }
 
+    // Create the worksheet
     return fs.outputFile(outputFile, xlsBuffer).then(() => {
         console.timeEnd('Excel export');
         return data;

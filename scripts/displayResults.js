@@ -1,3 +1,9 @@
+/**
+ * 
+ * @param {string} outputSource absolute path of the output folder
+ * @param {object} data
+ */
+
 module.exports = (outputSource, data) => {
     const chalk = require('chalk');
 

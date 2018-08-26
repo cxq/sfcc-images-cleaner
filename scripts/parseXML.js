@@ -15,6 +15,10 @@ function getImages(products) {
     return [ ...new Set(images) ];  // Remove duplicated
 }
 
+/**
+ * 
+ * @param {string} path path of the XML file
+ */
 module.exports = (path) => {
     console.time('XML Parsing');
     const fs = require('fs');

@@ -30,6 +30,13 @@ function copyImage(folderImage, imagePath, outputSource) {
     return fs.copy(folderImage, path.join(outputSource, imagePath)).then(() => folderImage);
 }
 
+/**
+ * 
+ * @param {string} inputSource absolute path of the input folder
+ * @param {string} outputSource absolute path of the output folder
+ * @param {object} data
+ */
+
 module.exports = (inputSource, outputSource, data) => {
     console.time('Filtering & copy images');
     const sourceDirname = inputSource.split(path.sep).pop();
