@@ -51,7 +51,13 @@ fs.stat(sourcePath, (error) => {
                 quality: argv.quality
             }));
         }
-        return Promise.all(promises).then(() => data);
+        return Promise.all(promises).then((values) => {
+            values.forEach((value) => {
+                Object.assign(data, value);
+            });
+            
+            return data;
+        });
     })
     .then(displayResults.bind(this, outputPath))
     .then(() => {

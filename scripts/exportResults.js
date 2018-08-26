@@ -41,6 +41,6 @@ module.exports = (outputFile, data) => {
     return fs.outputFile(outputFile, xlsBuffer).then(() => {
         const results = performance.stop();
         console.log(`Finished '${chalk.cyan('Export Excel report')}' after ${chalk.magenta(results.time + 'ms')}`);
-        return data;
+        return {};
     });
 }

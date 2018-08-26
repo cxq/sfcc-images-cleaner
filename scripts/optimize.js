@@ -7,6 +7,7 @@
 
 module.exports = (images, inputSource, outputSource, options) => {
     // Imagemin doesn't keep folder structure and build all images in a flat directory
+    // We can't pass a glob into the source of imagemin function and it requires to execute imagemin per file with an different output in order to keep folder structure
     function optimImage(imagePath) {
         const path = require('path');
         const imagemin = require('imagemin');
@@ -23,7 +24,7 @@ module.exports = (images, inputSource, outputSource, options) => {
                 imageminMozjpeg({ quality }),
                 imageminPngquant({ quality }),
             ],
-        })
+        }).then((files) => files[0]) // We only pass one image
     }
 
     const performance = require('execution-time')();
@@ -31,14 +32,27 @@ module.exports = (images, inputSource, outputSource, options) => {
     performance.start();
 
     console.log(`Starting '${chalk.cyan('Optimize images')}'...`);
+    let totalOptimizedSize = 0; // in bytes
 
     let promises = [];
+    let optimizedImages = [];
+    
     for (let i = 0, l = images.length; i < l; i++) {
-        promises.push(optimImage(images[i]));
+        promises.push(optimImage(images[i]).then((file) => {
+            const fileSize = file.data.length;
+            console.log(chalk.green('✔ ') + file.path + chalk.gray(` (optimized to ${(fileSize/1000).toFixed(2)} KB)`));
+            totalOptimizedSize += fileSize;
+            optimizedImages.push(file.path);
+        }));
     }
 
     return Promise.all(promises).then(() => {
         const results = performance.stop();
         console.log(`Finished '${chalk.cyan('Optimize images')}' after ${chalk.magenta(results.time + 'ms')}`);
+        return {
+            optimizedImages,
+            totalImageOptimized: optimizedImages.length,
+            totalOptimizedSize,
+        }
     });
 };

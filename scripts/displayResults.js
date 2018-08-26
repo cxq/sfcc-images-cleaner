@@ -16,10 +16,17 @@ module.exports = (outputSource, data) => {
 
     console.log('\n---------------------------------------------------------------\n');
 
-    console.log('Folder copied: ', chalk.magenta(outputSource));
+    console.log('Folder copied: ', chalk.magenta(outputSource + '/build'));
+    if (data.optimizedImages) {
+        console.log('Folder with optimization copied: ', chalk.magenta(outputSource + '/build-optimized'));
+    }
     console.log('Total images copied: ', chalk.green(data.totalCopiedImages));
     console.log('Total images skipped: ', data.totalSkippedImages);
     console.log('Total images in XML not found in the folder: ', chalk.red(data.totalNotFoundImages));
+
+    if (data.totalOptimizedSize) {
+        console.log('Total size of the optimized image folder: ', chalk.green(`${(data.totalOptimizedSize / 1000000).toFixed(2)}mb`)); // size in mb
+    }
 
     return data;
 };
