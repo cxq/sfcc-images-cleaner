@@ -20,8 +20,13 @@ function getImages(products) {
  * @param {string} path path of the XML file
  */
 module.exports = (path) => {
-    console.time('XML Parsing');
+    const performance = require('execution-time')();
+    const chalk = require('chalk');
     const fs = require('fs');
+    performance.start();
+
+    console.log(`Starting '${chalk.cyan('XML Parsing')}'...`);
+
     var parseString = require('xml2js').parseString;
 
     return new Promise((resolve) => {
@@ -42,7 +47,8 @@ module.exports = (path) => {
                     xmlImages,
                     totalXmlImages: xmlImages.length,
                 });
-                console.timeEnd('XML Parsing');
+                const results = performance.stop();
+                console.log(`Finished '${chalk.cyan('XML Parsing')}' after ${chalk.magenta(results.time + 'ms')}`);
             });
         });
     });

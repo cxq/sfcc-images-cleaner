@@ -27,7 +27,7 @@ function resolveImagePath(sourceDirname, imagePath) {
 }
 
 function copyImage(folderImage, imagePath, outputSource) {
-    return fs.copy(folderImage, path.join(outputSource, imagePath)).then(() => folderImage);
+    return fs.copy(folderImage, path.join(outputSource, 'build' ,imagePath)).then(() => folderImage);
 }
 
 /**
@@ -38,7 +38,12 @@ function copyImage(folderImage, imagePath, outputSource) {
  */
 
 module.exports = (inputSource, outputSource, data) => {
-    console.time('Filtering & copy images');
+    const performance = require('execution-time')();
+    const chalk = require('chalk');
+    performance.start();
+
+    console.log(`Starting '${chalk.cyan('Filtering & copy images')}'...`);
+
     const sourceDirname = inputSource.split(path.sep).pop();
 
     function createOuput() {
@@ -69,7 +74,10 @@ module.exports = (inputSource, outputSource, data) => {
                 return Promise.all(copyPromises).then(() => {
                     const totalCopiedImages = copiedImages.length;
                     const totalSkippedImages = skippedImages.length;
-                    console.timeEnd('Filtering & copy images');
+                    const results = performance.stop();
+                    
+                    console.log(`Finished '${chalk.cyan('Filtering & copy images')}' after ${chalk.magenta(results.time + 'ms')}`);
+                    
                     return {
                         ...data,
                         copiedImages,

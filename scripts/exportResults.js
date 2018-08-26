@@ -4,7 +4,12 @@
  * @param {object} data
  */
 module.exports = (outputFile, data) => {
-    console.time('Excel export');
+    const performance = require('execution-time')();
+    const chalk = require('chalk');
+    performance.start();
+
+    console.log(`Starting '${chalk.cyan('Export Excel report')}'...`);
+
     const path = require('path');
     const fs = require('fs-extra');
     const xlsx = require('node-xlsx');
@@ -34,7 +39,8 @@ module.exports = (outputFile, data) => {
 
     // Create the worksheet
     return fs.outputFile(outputFile, xlsBuffer).then(() => {
-        console.timeEnd('Excel export');
+        const results = performance.stop();
+        console.log(`Finished '${chalk.cyan('Export Excel report')}' after ${chalk.magenta(results.time + 'ms')}`);
         return data;
     });
 }

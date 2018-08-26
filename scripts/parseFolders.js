@@ -6,7 +6,12 @@
  */
 
 module.exports = (inputSource, data) => {
-    console.time('Parse folders');
+    const performance = require('execution-time')();
+    const chalk = require('chalk');
+    performance.start();
+
+    console.log(`Starting '${chalk.cyan('Parse folders')}'...`);
+
     const recursive = require("recursive-readdir");
 
     return new Promise((resolve, reject) => {
@@ -16,7 +21,8 @@ module.exports = (inputSource, data) => {
                 folderImages: files,
                 totalFolderImages: files.length
             });
-            console.timeEnd('Parse folders');
+            const results = performance.stop();
+            console.log(`Finished '${chalk.cyan('Parse folders')}' after ${chalk.magenta(results.time + 'ms')}`);
         }, reject);
     });
 };

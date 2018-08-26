@@ -11,15 +11,15 @@ module.exports = (outputSource, data) => {
     console.log(chalk.green.bold('Successfully finished'));
     console.log(chalk.green.bold('---------------------------------------------------------------\n'));
 
-    console.log(chalk.bold('Total XML images: '), data.totalXmlImages);
-    console.log(chalk.bold('Total images in the folder: '), data.totalFolderImages);
+    console.log('Total XML images: ', data.totalXmlImages);
+    console.log('Total images in the folder: ', data.totalFolderImages);
 
     console.log('\n---------------------------------------------------------------\n');
 
-    console.log(chalk.bold('Folder copied: ', chalk.magenta(outputSource)));
-    console.log(chalk.bold('Total images copied: '), chalk.green(data.totalCopiedImages));
-    console.log(chalk.bold('Total images skipped: '), data.totalSkippedImages);
-    console.log(chalk.bold('Total images in XML not found in the folder: '), chalk.red(data.totalNotFoundImages));
+    console.log('Folder copied: ', chalk.magenta(outputSource));
+    console.log('Total images copied: ', chalk.green(data.totalCopiedImages));
+    console.log('Total images skipped: ', data.totalSkippedImages);
+    console.log('Total images in XML not found in the folder: ', chalk.red(data.totalNotFoundImages));
 
     return data;
 };

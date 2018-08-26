@@ -27,7 +27,11 @@
   },
   "dependencies": {
     "chalk": "^2.4.1",
+    "execution-time": "^1.2.0",
     "fs-extra": "^7.0.0",
+    "imagemin": "^6.0.0",
+    "imagemin-mozjpeg": "^7.0.0",
+    "imagemin-pngquant": "^6.0.0",
     "node-xlsx": "^0.12.1",
     "recursive-readdir": "^2.2.2",
     "xml2js": "^0.4.19",

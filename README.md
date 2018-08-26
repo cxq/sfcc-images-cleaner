@@ -53,4 +53,19 @@ sfcc-images-cleaner ../default-catalog/ ../default-clean-catalog --config=catalo
 ```
 
 ### optimize (optional)
-Feature to come... (compress image)
+Output a image optimized version of the cleaned folder.
+
+#### optim
+Optim option can be passed to enable the feature. Be aware that can take time depending on the number of images you have
+
+```bash
+sfcc-images-cleaner ../default-catalog/ ../default-clean-catalog --config=catalog.xml --optim
+```
+
+#### quality
+Quality can be defined from a range `0` (worst) to `100` (perfect). 
+By default, if nothing is passed the value 60 is taken. The option can work only if `optim` options is set
+
+```bash
+sfcc-images-cleaner ../default-catalog/ ../default-clean-catalog --config=catalog.xml --optim --quality=80
+```

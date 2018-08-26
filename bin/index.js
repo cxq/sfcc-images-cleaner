@@ -19,7 +19,7 @@ if (!argv.config) {
 }
 
 const sourcePath = path.resolve(inputSource);
-const outputPath = path.resolve(outputSource);
+const outputPath = path.resolve(path.join(outputSource));
 
 // Check if directory exists
 fs.stat(sourcePath, (error) => {
@@ -38,14 +38,21 @@ fs.stat(sourcePath, (error) => {
     parseXML(path.relative(process.cwd(), argv.config))
     .then(parseFolders.bind(this, sourcePath))
     .then(cleanFolders.bind(this, sourcePath, outputPath))
-    .then(displayResults.bind(this, outputPath))
     .then((data) => {
+        const promises = [];
         if (argv.export) {
             const exportResults = require('../scripts/exportResults');
-            exportResults(path.join(outputPath, argv.export), data);
+            promises.push(exportResults(path.join(outputPath, argv.export), data));
         } 
-        return data;
-    }).then(() => {
+        
+        if (argv.optim) {
+            const optimize = require('../scripts/optimize');
+            promises.push(optimize(data.copiedImages, outputPath, argv.quality));
+        }
+        return Promise.all(promises).then(() => data);
+    })
+    .then(displayResults.bind(this, outputPath))
+    .then(() => {
         console.log('\n---------------------------------------------------------------');
         console.log(chalk.bold(' Total duration '));
         console.log('---------------------------------------------------------------\n');
