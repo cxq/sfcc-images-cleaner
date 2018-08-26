@@ -47,7 +47,9 @@ fs.stat(sourcePath, (error) => {
         
         if (argv.optim) {
             const optimize = require('../scripts/optimize');
-            promises.push(optimize(data.copiedImages, outputPath, argv.quality));
+            promises.push(optimize(data.copiedImages, sourcePath, outputPath, {
+                quality: argv.quality
+            }));
         }
         return Promise.all(promises).then(() => data);
     })

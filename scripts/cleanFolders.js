@@ -1,31 +1,6 @@
 const path = require('path');
 const fs = require('fs-extra');
 
-/**
- * This is about cleaning the path to get only the base folder name and files
- * ie. ../../default-catalog/product/images/myImage.jpg -> product/images/myImage.jpg 
- * @param {string} sourceDirname image folders that is parsed
- * @param {string} imagePath img path from image folder
- */
-function resolveImagePath(sourceDirname, imagePath) {
-    const imgPaths = imagePath.split(path.sep);
-    let dirnameReached = false;
-    let finalPath = [];
-
-    for (let i = 0, l = imgPaths.length; i < l; i++) {
-        const pathElement = imgPaths[i];
-        if (!dirnameReached) {
-            // if sourceDirname is reached, we can start build the path
-            if (sourceDirname === pathElement) {
-                dirnameReached = true;
-            }
-        } else {
-            finalPath.push(pathElement);
-        }
-    }
-    return finalPath.join(path.sep);
-}
-
 function copyImage(folderImage, imagePath, outputSource) {
     return fs.copy(folderImage, path.join(outputSource, 'build' ,imagePath)).then(() => folderImage);
 }
@@ -40,6 +15,7 @@ function copyImage(folderImage, imagePath, outputSource) {
 module.exports = (inputSource, outputSource, data) => {
     const performance = require('execution-time')();
     const chalk = require('chalk');
+    const getPathFrom = require('../utils/getPathFrom');
     performance.start();
 
     console.log(`Starting '${chalk.cyan('Filtering & copy images')}'...`);
@@ -59,7 +35,7 @@ module.exports = (inputSource, outputSource, data) => {
                 const skippedImages = [];
 
                 data.folderImages.forEach((folderImage) => {
-                    const imagePath = resolveImagePath(sourceDirname, folderImage);
+                    const imagePath = getPathFrom(sourceDirname, folderImage);
                     const imgIndex = data.xmlImages.indexOf(imagePath);
 
                     // Copy image only if they are reference in the XML
@@ -75,7 +51,7 @@ module.exports = (inputSource, outputSource, data) => {
                     const totalCopiedImages = copiedImages.length;
                     const totalSkippedImages = skippedImages.length;
                     const results = performance.stop();
-                    
+
                     console.log(`Finished '${chalk.cyan('Filtering & copy images')}' after ${chalk.magenta(results.time + 'ms')}`);
                     
                     return {
