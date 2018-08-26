@@ -28,11 +28,13 @@ fs.stat(sourcePath, (error) => {
         return;
     }
 
+    const chalk = require('chalk');
     const parseXML = require('../scripts/parseXML');
     const parseFolders = require('../scripts/parseFolders');
     const cleanFolders = require('../scripts/cleanFolders');
     const displayResults = require('../scripts/displayResults');
-    console.time('Cleaner');
+    console.time('Total time');
+    console.log(chalk.green('Start processing...\n'));
     parseXML(path.relative(process.cwd(), argv.config))
     .then(parseFolders.bind(this, sourcePath))
     .then(cleanFolders.bind(this, sourcePath, outputPath))
@@ -44,10 +46,9 @@ fs.stat(sourcePath, (error) => {
         } 
         return data;
     }).then(() => {
-        const chalk = require('chalk');
         console.log('\n---------------------------------------------------------------');
         console.log(chalk.bold(' Total duration '));
         console.log('---------------------------------------------------------------\n');
-        console.timeEnd('Cleaner');
+        console.timeEnd('Total time');
     })
 }); 

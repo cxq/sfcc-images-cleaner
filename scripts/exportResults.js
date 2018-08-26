@@ -1,4 +1,5 @@
 module.exports = (outputFile, data) => {
+    console.time('Excel export');
     const path = require('path');
     const fs = require('fs-extra');
     const xlsx = require('node-xlsx');
@@ -26,6 +27,7 @@ module.exports = (outputFile, data) => {
     }
 
     return fs.outputFile(outputFile, xlsBuffer).then(() => {
+        console.timeEnd('Excel export');
         return data;
     });
 }

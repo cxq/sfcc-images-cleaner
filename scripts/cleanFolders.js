@@ -31,6 +31,7 @@ function copyImage(folderImage, imagePath, outputSource) {
 }
 
 module.exports = (inputSource, outputSource, data) => {
+    console.time('Filtering & copy images');
     const sourceDirname = inputSource.split(path.sep).pop();
 
     function createOuput() {
@@ -61,7 +62,7 @@ module.exports = (inputSource, outputSource, data) => {
                 return Promise.all(copyPromises).then(() => {
                     const totalCopiedImages = copiedImages.length;
                     const totalSkippedImages = skippedImages.length;
-
+                    console.timeEnd('Filtering & copy images');
                     return {
                         ...data,
                         copiedImages,

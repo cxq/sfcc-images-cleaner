@@ -16,6 +16,7 @@ function getImages(products) {
 }
 
 module.exports = (path) => {
+    console.time('XML Parsing');
     const fs = require('fs');
     var parseString = require('xml2js').parseString;
 
@@ -37,6 +38,7 @@ module.exports = (path) => {
                     xmlImages,
                     totalXmlImages: xmlImages.length,
                 });
+                console.timeEnd('XML Parsing');
             });
         });
     });
