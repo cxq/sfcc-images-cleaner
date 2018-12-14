@@ -5,7 +5,7 @@
  * @param {string} filePath
  * @param {boolean} skip
  */
-module.exports = (startDirectory, filePath, useSeparator, skipBasename = false) => {
+module.exports = (startDirectory, filePath, skipBasename = false) => {
     const path = require('path');
     const imgPaths = filePath.split(path.sep);
     let dirnameReached = false;
@@ -22,5 +22,5 @@ module.exports = (startDirectory, filePath, useSeparator, skipBasename = false) 
             finalPath.push(pathElement);
         }
     }
-    return finalPath.join(useSeparator || path.sep);
+    return finalPath.join('/');
 }

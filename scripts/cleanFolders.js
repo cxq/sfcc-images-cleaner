@@ -40,12 +40,12 @@ module.exports = (inputSource, outputSource, parseMode, data) => {
                 const skippedImages = [];
 
                 data.folderImages.forEach((folderImage) => {
-                    let imagePath = getPathFrom(sourceDirname, folderImage, useSeparator);
+                    let imagePath = getPathFrom(sourceDirname, folderImage);
                     let localeFolder = '';
                     if (parseMode === 'all') {
-                        const imagePathArray = imagePath.split(useSeparator || path.sep);
+                        const imagePathArray = imagePath.split('/');
                         localeFolder = imagePathArray.shift();
-                        imagePath = imagePathArray.join(useSeparator || path.sep);
+                        imagePath = imagePathArray.join('/');
                     }
                     const imgIndex = data.xmlImages.indexOf(imagePath);
 
