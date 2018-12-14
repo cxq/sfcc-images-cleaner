@@ -12,7 +12,7 @@ function copyImage(folderImage, imagePath, outputSource) {
  * @param {object} data
  */
 
-module.exports = (inputSource, outputSource, data) => {
+module.exports = (inputSource, outputSource, parseMode, data) => {
     const performance = require('execution-time')();
     const chalk = require('chalk');
     const getPathFrom = require('../utils/getPathFrom');
@@ -35,13 +35,19 @@ module.exports = (inputSource, outputSource, data) => {
                 const skippedImages = [];
 
                 data.folderImages.forEach((folderImage) => {
-                    const imagePath = getPathFrom(sourceDirname, folderImage);
+                    let imagePath = getPathFrom(sourceDirname, folderImage);
+                    let localeFolder = '';
+                    if (parseMode === 'all') {
+                        const imagePathArray = imagePath.split('/');
+                        localeFolder = imagePathArray.shift();
+                        imagePath = imagePathArray.join('/');
+                    }
                     const imgIndex = data.xmlImages.indexOf(imagePath);
 
                     // Copy image only if they are reference in the XML
                     if (imgIndex > -1) {
                         xmlImages.splice(imgIndex, 1);  // Remove the path from the XML array to optimize performance and reduce search time
-                        return copyPromises.push(copyImage(folderImage, imagePath, outputSource)
+                        return copyPromises.push(copyImage(folderImage, imagePath, [outputSource,localeFolder].join(path.sep))
                             .then((copiedImage) => copiedImages.push(copiedImage)));
                     } else {
                         skippedImages.push(folderImage);

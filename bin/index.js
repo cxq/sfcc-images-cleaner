@@ -4,6 +4,7 @@ const path = require('path');
 const argv = require('yargs').argv;
 const inputSource = process.argv[2];
 const outputSource = process.argv[3];
+const parseMode = argv['mode'] || 'default'; // other value is 'all', which considers all locale folders
 
 if (!inputSource) {
     console.log('Input source is missing');
@@ -38,7 +39,7 @@ fs.stat(sourcePath, (error) => {
     console.log(chalk.green('Start processing...\n'));
     parseXML(path.relative(process.cwd(), argv.config))
     .then(parseFolders.bind(this, sourcePath))
-    .then(cleanFolders.bind(this, sourcePath, outputPath))
+    .then(cleanFolders.bind(this, sourcePath, outputPath, parseMode))
     .then((data) => {
         const promises = [];
         if (argv.export) {
