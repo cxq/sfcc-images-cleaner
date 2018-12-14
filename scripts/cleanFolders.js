@@ -29,13 +29,18 @@ module.exports = (inputSource, outputSource, data) => {
                     throw error;
                 }
 
+                // try to retrieve separator used in XML paths, in order to use it in getPathFrom function call
+                const firstPathWithSeparator = data.xmlImages.find( imgPath => /[\\\/]/.test(imgPath) );
+                const useSeparator = firstPathWithSeparator[firstPathWithSeparator.search(/[\\\/]/)];
+                console.log(`Using separator: ${chalk.cyan(useSeparator)}`);
+
                 const xmlImages = data.xmlImages.splice();
                 const copyPromises = [];
                 const copiedImages = [];
                 const skippedImages = [];
 
                 data.folderImages.forEach((folderImage) => {
-                    const imagePath = getPathFrom(sourceDirname, folderImage);
+                    const imagePath = getPathFrom(sourceDirname, folderImage, useSeparator);
                     const imgIndex = data.xmlImages.indexOf(imagePath);
 
                     // Copy image only if they are reference in the XML
