@@ -29,11 +29,6 @@ module.exports = (inputSource, outputSource, parseMode, data) => {
                     throw error;
                 }
 
-                // try to retrieve separator used in XML paths, in order to use it in getPathFrom function call
-                const firstPathWithSeparator = data.xmlImages.find( imgPath => /[\\\/]/.test(imgPath) );
-                const useSeparator = firstPathWithSeparator[firstPathWithSeparator.search(/[\\\/]/)];
-                console.log(`Using separator: ${chalk.cyan(useSeparator)}`);
-
                 const xmlImages = data.xmlImages.splice();
                 const copyPromises = [];
                 const copiedImages = [];
