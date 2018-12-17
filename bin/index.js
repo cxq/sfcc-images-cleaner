@@ -5,6 +5,7 @@ const argv = require('yargs').argv;
 const inputSource = process.argv[2];
 const outputSource = process.argv[3];
 const parseMode = argv['mode'] || 'default'; // other value is 'all', which considers all locale folders
+const objectType = argv['type'] || 'catalog'; // other value is 'library'
 
 if (!inputSource) {
     console.log('Input source is missing');
@@ -37,7 +38,7 @@ fs.stat(sourcePath, (error) => {
     const displayResults = require('../scripts/displayResults');
     console.time('Total time');
     console.log(chalk.green('Start processing...\n'));
-    parseXML(path.relative(process.cwd(), argv.config))
+    parseXML(path.relative(process.cwd(), argv.config), objectType)
     .then(parseFolders.bind(this, sourcePath))
     .then(cleanFolders.bind(this, sourcePath, outputPath, parseMode))
     .then((data) => {

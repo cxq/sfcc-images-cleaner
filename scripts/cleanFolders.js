@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs-extra');
 
 function copyImage(folderImage, imagePath, outputSource) {
-    return fs.copy(folderImage, path.join(outputSource, 'build' ,imagePath)).then(() => folderImage);
+    return fs.copy(folderImage, path.join(outputSource, imagePath)).then(() => folderImage);
 }
 
 /**

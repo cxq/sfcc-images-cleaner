@@ -16,9 +16,9 @@ module.exports = (outputSource, data) => {
 
     console.log('\n---------------------------------------------------------------\n');
 
-    console.log('Folder copied: ', chalk.magenta(outputSource + '/build'));
+    console.log('Folder copied: ', chalk.magenta(outputSource + require('path').sep + 'build'));
     if (data.optimizedImages) {
-        console.log('Folder with optimization copied: ', chalk.magenta(outputSource + '/build-optimized'));
+        console.log('Folder with optimization copied: ', chalk.magenta(outputSource + require('path').sep + 'build-optimized'));
     }
     console.log('Total images copied: ', chalk.green(data.totalCopiedImages));
     console.log('Total images skipped: ', data.totalSkippedImages);
