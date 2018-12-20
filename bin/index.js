@@ -38,7 +38,7 @@ fs.stat(sourcePath, (error) => {
     const displayResults = require('../scripts/displayResults');
     console.time('Total time');
     console.log(chalk.green('Start processing...\n'));
-    parseXML(path.relative(process.cwd(), argv.config), objectType)
+    parseXML[objectType === 'catalog' ? 'parseProductsXML' : 'parseContentXML'](path.relative(process.cwd(), argv.config))
     .then(parseFolders.bind(this, sourcePath))
     .then(cleanFolders.bind(this, sourcePath, outputPath, parseMode))
     .then((data) => {
