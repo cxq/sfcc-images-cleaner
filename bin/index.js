@@ -16,7 +16,7 @@ if (!outputSource) {
     return;
 }
 
-if (!argv.config) {
+if (!argv.file) {
     console.log('Missing configuration XML');
 }
 
@@ -31,13 +31,21 @@ fs.stat(sourcePath, (error) => {
     }
 
     const chalk = require('chalk');
-    const parseXML = require('../scripts/parseXML');
+    let parseXML;
+
+    // Can be "library" or "catalog". Depending on this command it will run different scripts
+    if (argv.type === 'library') {
+        parseXML = require('../scripts/parseLibraryXML');
+    } else {
+        parseXML = require('../scripts/parseCatalogXML');
+    }
+
     const parseFolders = require('../scripts/parseFolders');
     const cleanFolders = require('../scripts/cleanFolders');
     const displayResults = require('../scripts/displayResults');
     console.time('Total time');
     console.log(chalk.green('Start processing...\n'));
-    parseXML(path.relative(process.cwd(), argv.config))
+    parseXML(path.relative(process.cwd(), argv.file))
     .then(parseFolders.bind(this, sourcePath))
     .then(cleanFolders.bind(this, sourcePath, outputPath, parseMode))
     .then((data) => {
