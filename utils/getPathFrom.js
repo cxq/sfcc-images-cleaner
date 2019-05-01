@@ -22,5 +22,6 @@ module.exports = (startDirectory, filePath, skipBasename = false) => {
             finalPath.push(pathElement);
         }
     }
-    return finalPath.join('/');
+
+    return finalPath.join(path.sep);
 }
