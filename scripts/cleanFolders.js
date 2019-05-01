@@ -28,16 +28,14 @@ module.exports = (inputSource, outputSource, data) => {
                 if (error) {
                     throw error;
                 }
-
-                const xmlImages = data.xmlImages.splice();
+                const xmlImages = [...data.xmlImages]; // Create a copy of the XML Images Array
                 const copyPromises = [];
                 const copiedImages = [];
                 const skippedImages = [];
-
                 data.folderImages.forEach((folderImage) => {
                     const imagePath = getPathFrom(sourceDirname, folderImage);
-                    const imgIndex = data.xmlImages.indexOf(imagePath);
-
+                    const imgIndex = xmlImages.indexOf(imagePath);
+                    
                     // Copy image only if they are reference in the XML
                     if (imgIndex > -1) {
                         xmlImages.splice(imgIndex, 1);  // Remove the path from the XML array to optimize performance and reduce search time
